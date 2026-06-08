@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
+       String? _currentAlertId;
   late AnimationController _controller;
 
   @override
@@ -54,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen>
 );
 
 print('PANIC ALERT ID: ${alert['id']}');
+_currentAlertId = alert['id'];
 final fileName =
     AudioUploadService.generateFileName(alert['id']);
 
