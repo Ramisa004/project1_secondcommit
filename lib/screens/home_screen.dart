@@ -173,10 +173,31 @@ Please contact me immediately.
     onPressed: () async {
       final path = await AudioRecordingService.stopRecording();
       print('RECORDED FILE PATH: $path');
+       if (path != null && _currentAlertId != null) {
+    final fileName =
+        AudioUploadService.generateFileName(_currentAlertId!);
+
+    await AudioUploadService.uploadBlobUrl(
+      blobUrl: path,
+      fileName: fileName,
+    );
+    final audioUrl =
+    AudioUploadService.getPublicUrl(fileName);
+
+await PanicAlertService.updateAudioUrl(
+  alertId: _currentAlertId!,
+  audioUrl: audioUrl,
+);
+
+print('AUDIO URL SAVED: $audioUrl');
+
+    print('UPLOAD COMPLETED');
+  }
       print('RECORDING STOPPED SUCCESSFULLY');
     },
     child: const Text('Stop Recording'),
   ),
+     
 
 
                 /// 🔥 HERO PANIC
